@@ -1,0 +1,56 @@
+#include<stdio.h>
+int main()
+     {
+
+            float n;
+            scanf("%f",&n);
+  //ceil
+
+  int m=(int)n;
+
+  if(n==m)
+         {
+           printf("ceil:%d,floor:%d,round:%d",m,m,m);
+
+         }
+
+        else if(n>0)
+
+{
+    printf("floor:%d\n",(int)(n));
+
+printf("ceil:%d\n",(int)(n+1));
+printf("round:%d\n",(int)(n+0.5));
+
+
+}
+
+else if(n<0)
+
+{
+
+     printf("floor:%d\n",(int)(n));
+
+printf("ceil:%d\n",(int)(n-1));
+printf("round:%d\n",(int)(n-0.5));
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    return 0;
+
+     }
