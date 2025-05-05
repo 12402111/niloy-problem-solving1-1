@@ -1,59 +1,30 @@
-#include<stdio.h>
-int main()
-{
-    int n;int max =-1; int sm =-1;
-    scanf("%d", &n);
-    int r1=n%10;
-    n=n/10 ;
-    if(r1>max)
-    {
-        max =r1;
+#include <stdio.h>
 
-    }
-    int r2 = n%10;
-    n=n/10;
-    if(r2 > max)
-    {
-        sm = max;
-        max = r2;
-    }
-    else if (r2 > sm)
-    {
-        sm = r2;
-    }
+int main() {
+    int num, d1, d2, d3, d4;
+    int max, secondMax;
+    printf("Enter a 4-digit number: ");
+    scanf("%d", &num);
+   d1=num / 1000;
+    d2 = (num / 100) % 10;
+    d3 = (num / 10) % 10;
+    d4 = num % 10;
+    max = d1;
+    if (d2 > max) max = d2;
+    if (d3 > max) max = d3;
+    if (d4 > max) max = d4;
 
-    int r3 = n%10;
-    n=n/10;
+    secondMax = -1;
 
-    if(r3 > max)
-    {
-        sm = max;
-        max = r3;
-    }
-    else if (r3 > sm)
-    {
-        sm = r3;
-    }
-    int r4 = n%10;
-    n=n/10;
+    if (d1 != max && d1 > secondMax) secondMax = d1;
+    if (d2 != max && d2 > secondMax) secondMax = d2;
+    if (d3 != max && d3 > secondMax) secondMax = d3;
+    if (d4 != max && d4 > secondMax) secondMax = d4;
 
-if(r4 > max)
-    {
-        sm = max;
-        max = r4;
-    }
-    else if (r4 > sm)
-    {
-        sm = r4;
-    }
-if(sm!=max)
-   {
-   printf("m:%d s:%d", max, sm);
-   }
+    printf("Maximum digit: %d\n", max);
+    if (secondMax != -1)
+        printf("Second maximum digit: %d\n", secondMax);
 
-  else{
-   printf("-1");
-}
-main();
+
     return 0;
 }
