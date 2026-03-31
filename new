@@ -1,0 +1,61 @@
+///Longest common 
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    string s, t;
+    cin >> s >> t;
+    int n = s.length(), m = t.length();
+   vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
+
+    auto solve = [&](auto&& sel, int i, int j) ->int {
+        if (i == 0 || j == 0) return 0;      
+        if (dp[i][j] != -1) return dp[i][j]; 
+        if (s[i-1] == t[j-1])               
+            return dp[i][j] = sel(sel, i-1, j-1) + 1;
+        return dp[i][j] = max(sel(sel, i-1, j), sel(sel, i, j-1));
+    };
+
+    cout << solve(solve, n, m) << endl; // start from n,m not n-1,m-1
+
+    // Reconstruction — now dp[i][j] indices match perfectly
+    string res = "";
+    int i = n, j = m;
+    while (i > 0 && j > 0) {
+        if (s[i-1] == t[j-1]) { res = s[i-1] + res; i--; j--; }
+        else if (dp[i-1][j] >= dp[i][j-1]) i--;
+        else j--;
+    }
+
+    cout << res << endl;
+}
+
+
+/* for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            if(s[i-1]==t[j-1])
+            {
+                dp[i][j]=dp[i-1][j-1]+1;
+            }
+            else{
+                dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    string lcs="";
+    int i = n, j = m;
+    while (i > 0 && j > 0) {
+        if (s[i-1] == t[j-1]) {
+            lcs = s[i-1] + lcs;  // prepend (we're going backwards)
+            i--; j--;             // came from diagonal
+        } else if (dp[i-1][j] >= dp[i][j-1]) {
+            i--;                  // came from above
+        } else {
+            j--;                  // came from left
+        }
+    }
+   
+    cout<<lcs;
+*/
