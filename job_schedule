@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Job { int start, end, value; };
+
+int main() {
+    int t;
+    cin >> t;
+    vector<Job> jobs(t);
+    vector<int> dp(t, -1);
+
+    for (int i = 0; i < t; i++)
+        cin >> jobs[i].start >> jobs[i].end >> jobs[i].value;
+
+    sort(jobs.begin(), jobs.end(), [](const Job& a, const Job& b) {
+        return a.start < b.start;
+    });
+
+    auto solve = [&](auto&& self, int i) -> int {
+        if (i >= t) return 0;
+        if (dp[i] != -1) return dp[i];
+
+        // Binary search: first j where jobs[j].start >= jobs[i].end
+        int lo = i + 1, hi = t - 1, j = t;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (jobs[mid].start >= jobs[i].end) {
+                j = mid;
+                hi = mid - 1; // try to find even earlier valid job
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        int take = jobs[i].value + self(self, j); // take job i, jump to j
+        int skip = self(self, i + 1);             // skip job i
+
+        return dp[i] = max(take, skip);
+    };
+
+    cout << solve(solve, 0) << endl;
+}
